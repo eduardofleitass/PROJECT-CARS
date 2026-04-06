@@ -1,9 +1,10 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, ParseUUIDPipe, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import {v4 as uuid} from 'uuid';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dtos/create-car.dto';
 
 @Controller('cars')
+// @UsePipes (ValidationPipe)
 export class CarsController {
     constructor(
         private readonly CarsService: CarsService
