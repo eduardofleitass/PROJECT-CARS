@@ -2,6 +2,7 @@ import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe
 import {v4 as uuid} from 'uuid';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dtos/create-car.dto';
+import { UpdateCarDto } from './dtos/update-car.dto';
 
 @Controller('cars')
 // @UsePipes (ValidationPipe)
@@ -23,14 +24,14 @@ export class CarsController {
 
      @Post()
      createCar(@Body()createcarDto: CreateCarDto){
-        return createcarDto
+        return this.CarsService.create(createcarDto)
      }
      @Patch(':id')
      updateCar(
-      @Param('id',ParseIntPipe) id:number,
-      @Body()body:any)
+      @Param('id',ParseUUIDPipe) id:string,
+      @Body()updateCarDto: UpdateCarDto )
       {
-        return body;
+        return updateCarDto;
      }
      @Delete(':id')
      deletCar(@Param ('id', ParseIntPipe )id:number){
