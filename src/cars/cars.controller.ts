@@ -1,9 +1,11 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, ParseUUIDPipe, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import {v4 as uuid} from 'uuid';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dtos/create-car.dto';
+import { UpdateCarDto } from './dtos/update-car.dto';
 
 @Controller('cars')
+// @UsePipes (ValidationPipe)
 export class CarsController {
     constructor(
         private readonly CarsService: CarsService
@@ -22,21 +24,18 @@ export class CarsController {
 
      @Post()
      createCar(@Body()createcarDto: CreateCarDto){
-        return createcarDto
+        return this.CarsService.create(createcarDto)
      }
      @Patch(':id')
      updateCar(
-      @Param('id',ParseIntPipe) id:number,
-      @Body()body:any)
+      @Param('id',ParseUUIDPipe) id:string,
+      @Body()updateCarDto: UpdateCarDto )
       {
-        return body;
+        return this.CarsService.update(id,updateCarDto); // Para actualizar el listado de los carros
      }
      @Delete(':id')
-     deletCar(@Param ('id', ParseIntPipe )id:number){
-        return{
-            method:'delete',
-            id
-        }
+     deletCar(@Param ('id', ParseUUIDPipe )id:string){
+        return this.CarsService.delete(id);
      }
 
 } 
