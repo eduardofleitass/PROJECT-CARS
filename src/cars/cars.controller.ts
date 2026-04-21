@@ -31,7 +31,7 @@ export class CarsController {
       @Param('id',ParseUUIDPipe) id:string,
       @Body()updateCarDto: UpdateCarDto )
       {
-        return updateCarDto;
+        return this.CarsService.update(id,updateCarDto); // Para actualizar el listado de los carros
      }
      @Delete(':id')
      deletCar(@Param ('id', ParseIntPipe )id:number){

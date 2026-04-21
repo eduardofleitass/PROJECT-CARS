@@ -43,6 +43,17 @@ export class CarsService {
     }
     update(id: string , updateCarDto : UpdateCarDto){
         
+        let carDB = this.findOneById (id); //condición para modificar los carros
+        
+       this.cars = this.cars.map(car =>{
+        if (car.id===id){
+            carDB={...carDB,...updateCarDto,id} //sobrescribir datos , no va sobrescribir el uuid
+            return carDB; 
+        }
+        return car; 
+       });
+        
+        return carDB; //carro actualizado
     }
     }
 
